@@ -369,3 +369,66 @@ int main ()
 }
 
 ```
+
+- Vetores / Arrays Exemplos
+```
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+int vet[5]; /* Declara um vetor de 5 posições inteiras */
+int i; /* índice para acessar cada elemento do vetor */
+/* Observação: na Linguagem C, o primeiro elemento de um vetor está no índice zero. */
+int main ()
+{
+ for ( i=0 ; i<5 ; i++ )
+ {
+ printf ("\nDigite o %d numero: " , i+1 );
+ fflush (stdin); scanf ("%d" , &vet[i] );
+ }
+ printf ("\n\nNúmeros digitados:\n " );
+ for ( i=0 ; i<5 ; i++ )
+ printf (" %d " , vet[i] );
+ getch();
+ return 0;
+}
+```
+
+```
+#include <stdio.h>
+char pessoa[256];
+int ind, tamanho;
+int main ()
+{
+ printf (" Digite um nome: "); /* solicita a digitação do nome */
+ fflush (stdin); /* limpa o buffer do teclado */
+ scanf ("%s" , &pessoa); /* captura o conteúdo digitado (com formato string - %s) */
+ /* na variável pessoa */
+ tamanho = 0; /* zera a variável tamanho, pois ainda não foi contabilizada letra alguma */
+ ind = 0; /* zera a variável ind, pois, em Linguagem C, a primeira posição é ZERO */
+ while ( pessoa[ind] != '\0') /* enquanto o caractere identificado em pessoa[ind] for */
+ { /* diferente de “null terminator” ('\0'): */
+ tamanho++; /* incrementa tamanho de 1 unidade (mais um caractere) */
+ ind++; /* vai para a próxima posição do vetor */
+ }
+ printf("O nome digitado possui %d letras." , tamanho); /* mostra resultado */
+ getch();
+ return 0;
+}
+```
+
+_Particularidade da função scanf:
+No programa anterior, se for digitado o nome MARIA, será exibida na tela a mensagem:
+O nome digitado possui 5 letras.
+Contudo, se for digitado o nome MARIA DE ALMEIDA, o programa continuará exibindo a mensagem:
+O nome digitado possui 5 letras.
+Aparentemente, parece que a função scanf considera que o texto digitado termina quando é
+encontrado o primeiro espaço em branco. Na verdade, o que ocorre é que, ao digitarmos várias
+strings para serem capturadas com scanf (MARIA DE ALMEIDA são 3 strings), ao final de cada uma
+delas é incorporado o caractere que identifica o final da string (“null terminator” - '\0').
+Assim, após a string MARIA ser digitada e acrescentado o espaço em branco o conteúdo da
+variável pessoa passa a ser apenas MARIA, sendo o restante das strings desprezadas.
+Para contornar este tipo de problema recomenda-se o uso da função gets, uma vez que, para esta
+função, o final da string só é considerado após a digitação do enter. Assim, quando se digita
+MARIA DE ALMEIDA e depois o enter, aí sim, a string é finalizada.
+Para testar isto no programa anterior, apenas digite troque a instrução scanf("%s" , &pessoa);
+por gets(pessoa);
